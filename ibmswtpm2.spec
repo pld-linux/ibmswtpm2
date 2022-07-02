@@ -2,11 +2,12 @@ Summary:	IBM's Software TPM 2.0
 Summary(pl.UTF-8):	Programowy TPM 2.0 stworzony przez IBM
 Name:		ibmswtpm2
 Version:	1661
-Release:	1
+Release:	2
 License:	BSD
 Group:		Development/Tools
 Source0:	https://downloads.sourceforge.net/ibmswtpm2/ibmtpm%{version}.tar.gz
 # Source0-md5:	df691c9c548023c1126742ff9213c006
+Patch0:		%{name}-openssl3.patch
 URL:		https://sourceforge.net/projects/ibmswtpm2/
 BuildRequires:	openssl-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -23,11 +24,12 @@ Microsoft z dodatkowymi plikami dopełniającymi implementację.
 
 %prep
 %setup -q -c
+%patch0 -p1
 
 %build
 %{__make} -C src \
 	CC="%{__cc}" \
-	CCFLAGS="%{rpmcflags} %{rpmcppflags} -Wall -Wmissing-declarations -Wmissing-prototypes -Wnested-externs -Werror -Wsign-compare -Wno-uninitialized -DTPM_POSIX -D_POSIX_ -DTPM_NUVOTON -I. -c" \
+	CCFLAGS="%{rpmcflags} %{rpmcppflags} -Wall -Wmissing-declarations -Wmissing-prototypes -Wnested-externs -Werror -Wsign-compare -Wno-uninitialized -Wno-error=deprecated-declarations -DTPM_POSIX -D_POSIX_ -DTPM_NUVOTON -I. -c" \
 	LNFLAGS="%{rpmldflags} %{rpmcflags} -lcrypto -lpthread -lrt"
 
 %install
