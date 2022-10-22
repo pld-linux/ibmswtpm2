@@ -1,13 +1,12 @@
 Summary:	IBM's Software TPM 2.0
 Summary(pl.UTF-8):	Programowy TPM 2.0 stworzony przez IBM
 Name:		ibmswtpm2
-Version:	1661
-Release:	2
+Version:	1682
+Release:	1
 License:	BSD
 Group:		Development/Tools
 Source0:	https://downloads.sourceforge.net/ibmswtpm2/ibmtpm%{version}.tar.gz
-# Source0-md5:	df691c9c548023c1126742ff9213c006
-Patch0:		%{name}-openssl3.patch
+# Source0-md5:	d929acc296cf2eb2dd481bc97fe42fa9
 URL:		https://sourceforge.net/projects/ibmswtpm2/
 BuildRequires:	openssl-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -24,7 +23,6 @@ Microsoft z dodatkowymi plikami dopełniającymi implementację.
 
 %prep
 %setup -q -c
-%patch0 -p1
 
 %build
 %{__make} -C src \
@@ -43,5 +41,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc LICENSE README.md ibmtpm.doc
+%doc LICENSE ibmtpm.doc
 %attr(755,root,root) %{_bindir}/tpm_server
